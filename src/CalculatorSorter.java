@@ -11,6 +11,7 @@
  */
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * Provides functionalities for managing calculation speeds, including entering predefined values,
@@ -19,54 +20,66 @@ import java.util.Arrays;
  * protected is producing accessibility only in those classes from the same package
  * on this context in this case default package.
  */
+import java.util.Scanner;
+
 public class CalculatorSorter {
-    
+
     /**
-     * Returns a predefined array of doubles representing calculation speeds in milliseconds. 
-     * This method simulates entering the speeds into the program, which in a real-world application,
-     * could be replaced with user input or retrieval from a database.
+     * Prompts the user to enter an array of calculation speeds in milliseconds.
+     * User input is then used to create and return an array of doubles.
      *
-     * @return array of doubles containing the calculation speeds.
+     * @return An array of doubles entered by the user.
      */
     protected double[] enterArrayValues() {
-        // This array is predefined with specific values for the purpose of this assessment.
-        // In a practical scenario, these values could come from user input or another data source.
-        return new double[]{21.23, 23.45, 23.71, 22.22, 24.12, 21.23, 21.23, 21.45};
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("How many calculation speeds will you enter?");
+        int numSpeeds = scanner.nextInt();
+
+        double[] speeds = new double[numSpeeds];
+        System.out.println("Enter each calculation speed in milliseconds:");
+
+        for (int i = 0; i < numSpeeds; i++) {
+            System.out.print("Speed " + (i + 1) + ": ");
+            speeds[i] = scanner.nextDouble();
+        }
+
+        scanner.close();
+        return speeds;
     }
 
     /**
-     * Sorts an array of calculation speeds in ascending order, from fastest to slowest. 
-     * This method demonstrates
-     * the use of the Arrays.sort utility method from the Java standard library.
+     * Sorts an array of calculation speeds in ascending order from fastest to slowest
+     * using the insertion sort algorithm.
      *
-     * @param speeds The unsorted array of calculation speeds.
-     * @return new array containing the sorted calculation speeds.
+     * @param speeds The array of calculation speeds to be sorted.
      */
-    protected double[] sortArray(double[] speeds) {
-        // clone() function the original array to avoid altering it directly,
-        // allowing for other operations or comparisons with the unsorted data if needed.
-        double[] sortedSpeeds = speeds.clone();
-        // Use the Arrays.sort method to sort the cloned array,
-        // resulting in a sorted sequence from the fastest (lowest value) 
-        // to the slowest (highest value) calculation speeds.
-        Arrays.sort(sortedSpeeds);
-        return sortedSpeeds;
+    protected void insertionSort(double[] speeds) {
+        for (int i = 1; i < speeds.length; i++) {
+            double key = speeds[i];
+            int j = i - 1;
+
+            // Move elements of speeds[0..i-1], that are greater than key,
+            // to one position ahead of their current position
+            while (j >= 0 && speeds[j] > key) {
+                speeds[j + 1] = speeds[j];
+                j = j - 1;
+            }
+            speeds[j + 1] = key;
+        }
     }
 
     /**
-     * Displays the sorted array of calculation speeds. Each speed is printed in a new line.
-     * followed by "ms" to indicate milliseconds. 
-     * easy to understand the order of calculation speeds from fastest to slowest.
+     * Displays the sorted array of calculation speeds. Each speed is printed on a new line
+     * followed by "ms" to indicate milliseconds, showing the order of calculation speeds
+     * from fastest to slowest.
      *
-     * @param sortedSpeeds The array of sorted calculation speeds to be displayed.
+     * @param speeds The array of sorted calculation speeds to be displayed.
      */
-    protected void displayArray(double[] sortedSpeeds) {
+    protected void displayArray(double[] speeds) {
         System.out.println("Calculation Speeds (Fastest to Slowest):");
-        // Iterate through each speed in the sorted array, printing it to the console.
-        // The printf method is formating the output to two decimal places.
-        for (double speed : sortedSpeeds) {
+        for (double speed : speeds) {
             System.out.printf("%.2f ms\n", speed);
         }
     }
-    
 }
+
