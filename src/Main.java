@@ -26,25 +26,16 @@ public class Main {
      * application.
      */
     public static void main(String[] args) {
-        /* Instantiate the CalculatorSorter class. 
-        This object (sorter) will be used to call the methods responsible for entering,
-        sorting, and displaying calculation speeds.*/
         CalculatorSorter sorter = new CalculatorSorter();
 
-        /* Call the method to enter the array values. 
-           This method is designed to simulate user input or retrieval
-           of calculation speeds from a predefined dataset.*/
-        double[] speeds = sorter.enterArrayValues();
+        // User enters the array values
+        double[] userSpeeds = sorter.enterArrayValues();
 
-        /* Sort the array of calculation speeds from fastest to slowest using the sortArray method. 
-           This method takes  the unsorted array as input and returns 
-           a new array that is sorted in ascending order.*/
-        double[] sortedSpeeds = sorter.sortArray(speeds);
+        // Sort the array using insertion sort
+        sorter.insertionSort(userSpeeds);
 
-        /* Display the sorted array of calculation speeds. 
-           This method iterates over the sorted array and prints each
-           value in a human-readable format, demonstrating the speeds from fastest to slowest.*/
-        sorter.displayArray(sortedSpeeds);
+        // Display the sorted array
+        sorter.displayArray(userSpeeds);
     }
 
 }
